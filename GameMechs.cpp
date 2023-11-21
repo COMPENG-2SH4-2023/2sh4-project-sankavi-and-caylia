@@ -3,13 +3,13 @@
 
 GameMechs::GameMechs()
 {
-    input = NULL;
+    input = 0;
     exitFlag = false;
     loseFlag = false;
 
     score = 0; // initializing score
-    boardSizeX = 20; // default board size
-    boardSizeY = 10;
+    boardSizeX = 30; // default board size
+    boardSizeY = 15;
 
     SLOWEST_SPEED = 200000; // Delay in microseconds for speed level 1 (slowest)
     SLOW_SPEED = 150000;
@@ -24,7 +24,7 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
 
-    input = NULL;
+    input = 0;
     exitFlag = false;
     loseFlag = false;
 
@@ -55,6 +55,7 @@ bool GameMechs::getExitFlagStatus()
     return exitFlag;
 }
 
+
 bool GameMechs::getLoseFlagStatus()
 {
     return loseFlag;
@@ -80,6 +81,8 @@ char GameMechs::getInput()
             input = tempInput; // Update regular input
         }
     }
+    return input;
+
 }
 
 int GameMechs::getBoardSizeX()
@@ -117,4 +120,8 @@ void GameMechs::clearInput()
     input = 0;
 }
 
+void GameMechs::incrementScore() {
+
+    score++;
+}
 

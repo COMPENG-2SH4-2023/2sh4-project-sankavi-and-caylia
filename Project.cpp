@@ -2,7 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
-
+#include "Player.h"
 
 
 #define BOARD_WIDTH 20
@@ -13,8 +13,11 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
+//Global Pointers 
+GameMechs* myGM;
+Player* playerPtr = nullptr;
 
-bool exitFlag;
+//bool exitFlag;
 
 
 
@@ -60,32 +63,6 @@ class GameMechs;
 
 enum Direction {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
-class Player {
-private:
-    // Define data members: position, direction, etc.
-    // Direction enum (UP, DOWN, LEFT, RIGHT)
-    objPos playerPos;   // Upgrade this in iteration 3.       
-    enum Direction myDir;
- 
-    Direction playerDirection;
-    GameMechs* mainGameMechsRef;
-
-public:
-    // Constructor and Destructor
-    Player(GameMechs* thisGMRef);
-    ~Player();
-
-    // Method to retrieve player position
-    void getPlayerPos(objPos &returnPos);
-    void updatePlayerDir();
-    void movePlayer();
-
-};
-
-
-
-
-
 
 void Initialize(void);
 void GetInput(void);
@@ -94,41 +71,42 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
+
+
 GameBoard game; 
-
-// Global pointer to Player object
-Player* playerPtr = nullptr;
-
-
-
-
 
 int main(void)
 {
 
     Initialize();
 
-    // Call methods of the Player class as needed
-    playerPtr->updatePlayerDir(); // Update player direction based on input
-    playerPtr->movePlayer();
+    if (myGM != nullptr && playerPtr != nullptr) {
+
+        // Call methods of the Player class as needed
+        playerPtr->updatePlayerDir(); // Update player direction based on input
+        playerPtr->movePlayer();
 
 
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
-        //playerPtr->updatePlayerDir(); // Update player direction based on input
-
-        
+        playerPtr->updatePlayerDir();
         RunLogic();
-        //playerPtr->movePlayer();
+        playerPtr->movePlayer();
         DrawScreen();
         LoopDelay();
     }
+}
 
     CleanUp();
 
+    
+    delete myGM;
+    delete playerPtr;
+
     return 0;
+
 
 }
 
@@ -139,31 +117,37 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    exitFlag = false;
+    //exitFlag = false;
 
     // Initialize the game board
     game.initializeBoard();
 
     // Create an instance of GameMechs (assuming it exists)
-    GameMechs gameMechanics;
+    //GameMechs gameMechanics;
 
-    playerPtr = new Player(&gameMechanics);
+    myGM = new GameMechs(26, 13); //make board size
+    playerPtr = new Player(myGM);
 
     objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@');
     playerPtr->getPlayerPos(initialPos);
 
-    //delete playerPtr;
+    //exitFlag = false
+   //  delete playerPtr;
+   //  delete myGM;
 
 
 }
 
 void GetInput(void)
 {
+
+   //myGM->getInput();
    
 }
 
 void RunLogic(void)
 {
+    playerPtr->updatePlayerDir();
     
 }
 
@@ -187,6 +171,8 @@ void DrawScreen(void)
 
     // display the game board
     game.displayBoard();
+
+
 
 
 }

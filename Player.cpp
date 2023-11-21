@@ -5,12 +5,16 @@
 #define BOARD_HEIGHT 10
 
 Player::Player(GameMechs* thisGMRef) {
-    mainGameMechsRef = thisGMRef;
+   /* 
     playerPos.x = BOARD_WIDTH / 2;
     playerPos.y = BOARD_HEIGHT / 2;
     playerPos.symbol = '*'; // '*' represents the player
     playerDirection = STOP; // Initial direction is STOP
     // Other initialization code...
+    */
+    mainGameMechsRef = thisGMRef;
+    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, 
+                        mainGameMechsRef->getBoardSizeY()/2, '*');
 }
 
 Player::~Player() {
@@ -18,10 +22,11 @@ Player::~Player() {
 }
 
 void Player::getPlayerPos(objPos& returnPos) {
-    returnPos = playerPos;
+    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void Player::updatePlayerDir() {
+    
     char userInput = mainGameMechsRef->getInput(); // Assuming getUserInput() method in GameMechs class
 
     switch (userInput) {
@@ -55,7 +60,7 @@ void Player::updatePlayerDir() {
 
 void Player::movePlayer() {
 
-    std::cout << "Before movement - Player Pos X: " << playerPos.x << ", Y: " << playerPos.y << std::endl;
+ 
     switch (playerDirection) {
         case UP:
             if (playerPos.y > 1) {
@@ -88,7 +93,5 @@ void Player::movePlayer() {
         default:
             break;
     }
-
-    std::cout << "After movement - Player Pos X: " << playerPos.x << ", Y: " << playerPos.y << std::endl;
 }
 
