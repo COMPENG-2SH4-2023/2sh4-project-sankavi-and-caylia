@@ -58,3 +58,7 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos)
     else
         return 0;
 }
+
+
+
+

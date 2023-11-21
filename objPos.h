@@ -1,12 +1,17 @@
 #ifndef OBJPOS_H
 #define OBJPOS_H
 
+
+
 class objPos
 {
+    
     public:
         int x;
         int y;
         char symbol;
+
+
 
         objPos();
         objPos(objPos &o); // copy constructor
@@ -20,6 +25,9 @@ class objPos
         bool isPosEqual(const objPos* refPos);
         
         char getSymbolIfPosEqual(const objPos* refPos);
+      
+
+        
 };
 
 #endif

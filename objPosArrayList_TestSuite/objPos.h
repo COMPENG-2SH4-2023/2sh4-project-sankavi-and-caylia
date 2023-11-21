@@ -3,6 +3,9 @@
 
 class objPos
 {
+
+
+
     public:
         int x;
         int y;
@@ -20,6 +23,9 @@ class objPos
         bool isPosEqual(const objPos* refPos);
         
         char getSymbolIfPosEqual(const objPos* refPos);
+        void DrawGameBoard();
+        
+        
 };
 
 #endif
