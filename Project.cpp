@@ -40,8 +40,18 @@ public:
             }
         }
     }
-
     void drawObject(const objPos &position) {
+        // first check if the symbol to be drawn is the player symbol 
+        if (position.symbol == '*') {
+            // erasing the previous player position before drawing the new one
+            for (int i = 0; i < height; ++i) {
+                for (int j = 0; j < width; ++j) {
+                    if (board[i][j] == '*') {
+                        board[i][j] = ' '; // clearing the position player here 
+                    }
+                }
+            }
+        }
         board[position.y][position.x] = position.symbol; // Draw object symbol at given position
     }
 
@@ -55,7 +65,9 @@ public:
         }
         // Display the string representation of the game board
         cout << display;
+
     }
+
 };
 
 // Forward declaration of GameMechs class
@@ -91,9 +103,9 @@ int main(void)
     while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
-        playerPtr->updatePlayerDir();
+        //playerPtr->updatePlayerDir();
         RunLogic();
-        playerPtr->movePlayer();
+        //playerPtr->movePlayer();
         DrawScreen();
         LoopDelay();
     }
@@ -148,6 +160,8 @@ void GetInput(void)
 void RunLogic(void)
 {
     playerPtr->updatePlayerDir();
+    playerPtr->movePlayer();
+    
     
 }
 

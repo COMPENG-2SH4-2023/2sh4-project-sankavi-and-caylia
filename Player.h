@@ -25,9 +25,11 @@ class Player
         void updatePlayerDir();
         void movePlayer();
 
+
     private:
         objPos playerPos;   // Upgrade this in iteration 3.       
         enum Direction myDir;
+       
 
         
 

@@ -56,11 +56,15 @@ void Player::updatePlayerDir() {
         default:
             break;
     }
+
+    //mainGameMechsRef->drawObject(playerPos);
+    
 }
 
 void Player::movePlayer() {
 
- 
+    //mainGameMechsRef->clearPosition(playerPos.x, playerPos.y);
+
     switch (playerDirection) {
         case UP:
             if (playerPos.y > 1) {
@@ -92,6 +96,9 @@ void Player::movePlayer() {
             break;
         default:
             break;
+            
     }
+    // Update the player's new position on the game board
+   // mainGameMechsRef->drawObject(playerPos);
 }
 
