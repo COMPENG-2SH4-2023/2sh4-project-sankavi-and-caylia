@@ -143,6 +143,8 @@ void Initialize(void)
     objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@');
     playerPtr->getPlayerPos(initialPos);
 
+    myGM->generateFood(initialPos); //generating the initial food
+
     //exitFlag = false
    //  delete playerPtr;
    //  delete myGM;
@@ -186,8 +188,10 @@ void DrawScreen(void)
     // display the game board
     game.displayBoard();
 
-
-
+    // displaying the food on the game board
+    objPos foodPosition;
+    myGM->getFoodPos(foodPosition);
+    game.drawObject(foodPosition);
 
 }
 
