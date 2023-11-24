@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GameMechs.h"
 #include <iostream>
 
 #define BOARD_WIDTH 20

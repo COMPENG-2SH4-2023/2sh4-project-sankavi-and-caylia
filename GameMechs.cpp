@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+#include <ctime> 
 
 GameMechs::GameMechs()
 {
@@ -125,3 +126,42 @@ void GameMechs::incrementScore() {
     score++;
 }
 
+void GameMechs::generateFood(objPos blockOff) {
+
+    // Ensure that the random seed is initialized once  
+    static bool seedInitialized = false;
+    if (!seedInitialized) {
+        srand(static_cast<unsigned int>(time(nullptr))); // Use time as a seed for the random food generator
+        seedInitialized = true;
+    }
+
+    int xRange = getBoardSizeX(); // Board width
+    int yRange = getBoardSizeY(); // Board height
+
+    // generating random character as food 
+    char randomChar = 'A' + rand() % 26; // from A-Z
+
+    // generating random spots (x and y coordinates) for the food
+    do {
+        // generating coordinates to stay within the border size
+        int foodX = rand() % (xRange - 2) + 1;
+        int foodY = rand() % (yRange - 2) + 1;
+
+        // Checking if the generated coordinates overlap with the blocked-off position or border
+        if ((foodX != blockOff.x || foodY != blockOff.y) && (foodX != 0 && foodY != 0 && foodX != xRange - 1 && foodY != yRange - 1)) {
+            // If no overlap with block-off position or border, set the food position and exit the loop
+            foodPos.x = foodX;
+            foodPos.y = foodY;
+            foodPos.symbol = randomChar; // Represents the randomly generated character
+            break;
+        }
+        // If the coordinates overlap, generate new ones
+    } while (true);
+ 
+}
+
+
+void GameMechs::getFoodPos(objPos& returnPos) {
+
+    returnPos = foodPos; //returns current position of the food
+}

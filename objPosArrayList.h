@@ -12,8 +12,9 @@ class objPosArrayList
         int sizeList;
         int sizeArray;
 
+
     public:
-        objPosArrayList();
+        objPosArrayList(int capacity = ARRAY_MAX_CAP);
         ~objPosArrayList();
 
         int getSize();

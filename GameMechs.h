@@ -2,13 +2,16 @@
 #define GAMEMECHS_H
 
 #include <cstdlib>
-#include <time.h>
+#include <ctime>
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Player.h"
 
 using namespace std;
 
+// Forward declaration of Player class
+class Player;
 
 class GameMechs
 {
@@ -19,6 +22,7 @@ class GameMechs
     // You will include more data members and member functions to complete your design.
 
     private:
+        objPos foodPos;
         char input;
         char tempInput;
         bool exitFlag;
@@ -40,6 +44,9 @@ class GameMechs
         GameMechs();
         GameMechs(int boardX, int boardY);
         //~GameMechs();
+
+        //Food();
+        //~Food();
         
         bool getExitFlagStatus();
         void setExitTrue();
@@ -54,8 +61,11 @@ class GameMechs
         int getBoardSizeX();
         int getBoardSizeY();
         int getScore();
+
         void incrementScore();
-      
+        void generateFood(objPos blockOff);   
+        void getFoodPos(objPos& returnPos);
+          
 
 };
 

@@ -5,6 +5,9 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
+// Forward declaration of GameMechs class
+class GameMechs;
+
 class Player
 {
     // Construct the remaining declaration from the project manual.

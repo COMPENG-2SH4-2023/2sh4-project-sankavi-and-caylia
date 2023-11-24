@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "objPosArrayList.h"
 
 
 #define BOARD_WIDTH 20
@@ -143,6 +144,8 @@ void Initialize(void)
     objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@');
     playerPtr->getPlayerPos(initialPos);
 
+    myGM->generateFood(initialPos); //generating the initial food
+
     //exitFlag = false
    //  delete playerPtr;
    //  delete myGM;
@@ -154,6 +157,17 @@ void GetInput(void)
 {
 
    //myGM->getInput();
+   char input;
+
+   // Debug-use key to clear old food and generate new one
+    if (input == 't') {
+        objPos playerPos;
+        playerPtr->getPlayerPos(playerPos); // Get player position
+        myGM->generateFood(playerPos); // Generate new food position avoiding player's position
+    }
+
+
+   
    
 }
 
@@ -186,8 +200,10 @@ void DrawScreen(void)
     // display the game board
     game.displayBoard();
 
-
-
+    // displaying the food on the game board
+    objPos foodPosition;
+    myGM->getFoodPos(foodPosition);
+    game.drawObject(foodPosition);
 
 }
 
