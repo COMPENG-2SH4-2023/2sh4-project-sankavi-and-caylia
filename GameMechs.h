@@ -10,12 +10,9 @@
 
 using namespace std;
 
-<<<<<<< HEAD
 // Forward declaration of Player class
 class Player;
 
-=======
->>>>>>> 59c728adee274432b77864a86072623a039a9416
 class GameMechs
 {
     // Construct the remaining declaration from the project manual.
@@ -67,12 +64,8 @@ class GameMechs
 
         void incrementScore();
         void generateFood(objPos blockOff);   
-<<<<<<< HEAD
         void getFoodPos(objPos& returnPos);
           
-=======
-        void getFoodPos(objPos& returnPos);       
->>>>>>> 59c728adee274432b77864a86072623a039a9416
 
 };
 
