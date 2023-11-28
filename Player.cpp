@@ -139,8 +139,8 @@ bool Player::checkSelfCollision() {
                 mainGameMechsRef->setExitTrue();
                 return true; // Collision detected
             } else {
-                // The snake hasn't moved and collision is due to its length being less than 2 after consuming food
-                // Reset the head's position to avoid immediate collision
+                // The snake has not moved and collision is due to its length being less than 2 after consuming food
+                // Reset the head position to avoid immediate collision
                 playerPosList->removeHead();
                 playerPosList->insertHead(currentHead);
                 return false;

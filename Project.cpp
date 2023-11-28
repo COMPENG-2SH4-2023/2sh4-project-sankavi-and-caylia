@@ -93,14 +93,16 @@ void RunLogic(void)
 {
     playerPtr->updatePlayerDir();
     playerPtr->movePlayer();
-
-
+ 
+ 
     if (playerPtr->checkSelfCollision()) {
         exitFlag = true; // Set exit flag to terminate game loop
         MacUILib_printf("Game has ended, your final score is: %d\n", myGM->getScore());
         return; // Exit the RunLogic function immediately after displaying the message
+        MacUILib_Delay(2000000); // Delay for 2 seconds
+ 
+        return; // Exit the RunLogic function immediately after displaying the message
     }
-    
     
 }
  
@@ -183,7 +185,10 @@ void LoopDelay(void)
  
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();   
+
+    // display the game over message
+    MacUILib_printf("Game has ended, your final score is: %d\n", myGM->getScore()); 
   
     MacUILib_uninit();
  
