@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
  
 Player::Player(GameMechs *thisGMRef)
 {
@@ -116,7 +117,42 @@ void Player::increasePlayerLength()
     playerPosList->getTailElement(tailPosition);
     playerPosList->insertTail(tailPosition);
 }
- 
+
+bool Player::checkSelfCollision() {
+    objPos currentHead;
+    playerPosList->getHeadElement(currentHead);
+
+    // First, get the current position of the head 
+    int headX = currentHead.x;
+    int headY = currentHead.y;
+
+    // Start checking collision from the second segment (index 1)
+    for (int i = 1; i < playerPosList->getSize(); ++i) {
+        objPos segment;
+        playerPosList->getElement(segment, i);
+
+        // Check if the head's position matches any segment's position in the snake's body
+        if (headX == segment.x && headY == segment.y) {
+            // Check if the snake's length is greater than 2
+            if (playerPosList->getSize() > 2) {
+                mainGameMechsRef->setLoseFlag();
+                mainGameMechsRef->setExitTrue();
+                return true; // Collision detected
+            } else {
+                // The snake hasn't moved and collision is due to its length being less than 2 after consuming food
+                // Reset the head's position to avoid immediate collision
+                playerPosList->removeHead();
+                playerPosList->insertHead(currentHead);
+                return false;
+            }
+        }
+    }
+
+    return false; // No collision detected
+
+}
+
+
  
 void Player::movePlayer()
 {
@@ -151,20 +187,22 @@ void Player::movePlayer()
         break;
     }
  
+    if (!checkSelfCollision()) {
+        
+        if (checkFoodConsumption())
+        {
+            mainGameMechsRef->incrementScore(); // food is consumed, increase score
+            increasePlayerLength(); // increase player length
+            objPos initialPos;
+            mainGameMechsRef->generateFood(*playerPosList, initialPos); // generating new food
+        }
+        else
+        {
+            // the new current head should be inserted to head of the list
+            playerPosList->insertHead(current_head);
  
-    if (checkFoodConsumption())
-    {
-        mainGameMechsRef->incrementScore(); // food is consumed, increase score
-        increasePlayerLength(); // increase player length
-        objPos initialPos;
-        mainGameMechsRef->generateFood(*playerPosList, initialPos); // generating new food
-    }
-    else
-    {
-        // the new current head should be inserted to head of the list
-        playerPosList->insertHead(current_head);
- 
-        // lastly remove the tail of the list
-        playerPosList->removeTail();
+            // lastly remove the tail of the list
+            playerPosList->removeTail();
+        }
     }
 }

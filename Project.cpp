@@ -6,8 +6,8 @@
 #include "objPosArrayList.h"
  
 #define DELAY_CONST 100000
-#define BOARD_WIDTH 20
-#define BOARD_HEIGHT 10
+#define BOARD_WIDTH 36
+#define BOARD_HEIGHT 18
  
 using namespace std;
  
@@ -46,6 +46,7 @@ int main(void)
         DrawScreen();
         LoopDelay();
     }
+
  
  
     CleanUp();
@@ -81,7 +82,7 @@ void GetInput(void)
     if (input == 't') {
         objPos playerPosList;
         playerPtr->getPlayerPos(playerPosList); // Get player position
-        myGM->generateFood(playerPosList); // Generate new food position avoiding player's position
+        myGM->generateFood(playerPosList); // Generate new food position avoiding player's positionwwww
     }
     */
    
@@ -92,6 +93,13 @@ void RunLogic(void)
 {
     playerPtr->updatePlayerDir();
     playerPtr->movePlayer();
+
+
+    if (playerPtr->checkSelfCollision()) {
+        exitFlag = true; // Set exit flag to terminate game loop
+        MacUILib_printf("Game has ended, your final score is: %d\n", myGM->getScore());
+        return; // Exit the RunLogic function immediately after displaying the message
+    }
     
     
 }
