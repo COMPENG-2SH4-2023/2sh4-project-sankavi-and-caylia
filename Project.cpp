@@ -40,9 +40,7 @@ int main(void)
     while(exitFlag == false)  
     {
         GetInput();
-        //playerPtr->updatePlayerDir();
         RunLogic();
-       // playerPtr->movePlayer();
         DrawScreen();
         LoopDelay();
     }
@@ -74,7 +72,13 @@ void Initialize(void)
  
 void GetInput(void)
 {
- 
+    char input = myGM->getInput(); // Get input from GameMechs class
+
+    if (input == ' ') { // Check if the input is the space bar
+        exitFlag = true; // Set exit flag to end the game
+        return;
+    }
+    
    //myGM->getInput();
    //char input;
  
@@ -105,7 +109,7 @@ void RunLogic(void)
     }
     
 }
- 
+
 void DrawScreen(void)
 {
 MacUILib_clearScreen();
