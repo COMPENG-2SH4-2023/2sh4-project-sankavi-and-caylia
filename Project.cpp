@@ -78,9 +78,14 @@ void GetInput(void)
         exitFlag = true; // Set exit flag to end the game
         return;
     }
-    
-   //myGM->getInput();
-   //char input;
+
+    // Debug-use key to clear old food and generate new one
+    if (input == 't') {
+        objPosArrayList* playerPosList = playerPtr->getPlayerPos(); // Get player position
+        objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@'); // Generate a new initial position for the food
+        myGM->generateFood(*playerPosList, initialPos); // Generate new food position avoiding player's position
+    }
+
  
     /*// Debug-use key to clear old food and generate new one
     if (input == 't') {
@@ -138,6 +143,7 @@ MacUILib_clearScreen();
                     break;
                 }
             }
+
             // Check and draw food if not drawn by player
             if (!drawn)
             {

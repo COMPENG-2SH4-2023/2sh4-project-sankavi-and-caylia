@@ -68,7 +68,7 @@ char GameMechs::getInput()
     if (MacUILib_hasChar()) {
         tempInput = MacUILib_getChar();
  
-        if (tempInput == 27) {!!
+        if (tempInput == 27) {
             exitFlag = 1; // Terminate program on escape key
         } else if (tempInput == '+') { // When + is pressed, speed will increase up the the max of 5
             if (speedLevel < 5) {

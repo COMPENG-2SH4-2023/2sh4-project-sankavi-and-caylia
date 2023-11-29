@@ -4,7 +4,7 @@
 Player::Player(GameMechs *thisGMRef)
 {
  
-    //intializing the border sizes here
+    //Intializing the border sizes 
     int boardSizeX = thisGMRef->getBoardSizeX();
     int boardSizeY = thisGMRef->getBoardSizeY();
  
@@ -16,7 +16,7 @@ Player::Player(GameMechs *thisGMRef)
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
  
-    //For debugging purposes
+    //For debugging purposes and checking various size and snake body 
     //playerPosList->insertHead(tempPos);
     //playerPosList->insertHead(tempPos);
     //playerPosList->insertHead(tempPos);
