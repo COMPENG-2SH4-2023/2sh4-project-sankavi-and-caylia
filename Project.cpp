@@ -11,7 +11,7 @@
  
 using namespace std;
  
- 
+
  
 bool exitFlag;
  
@@ -28,7 +28,7 @@ void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
- 
+
  
  
 int main(void)
@@ -80,7 +80,7 @@ void GetInput(void)
     }
 
     // Debug-use key to clear old food and generate new one
-    if (input == 't') {
+    if (input == 'n') {
         objPosArrayList* playerPosList = playerPtr->getPlayerPos(); // Get player position
         objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@'); // Generate a new initial position for the food
         myGM->generateFood(*playerPosList, initialPos); // Generate new food position avoiding player's position
@@ -176,6 +176,7 @@ MacUILib_clearScreen();
     }
  
     MacUILib_printf("Current Score: %d\n", myGM->getScore()); // Display the current score
+    MacUILib_printf("=====DEBUG MESSAGES=====\n");
  
     MacUILib_printf("Player position: \n"); // Display the current player position
     for (int l = 0; l < player_body->getSize(); l++)
