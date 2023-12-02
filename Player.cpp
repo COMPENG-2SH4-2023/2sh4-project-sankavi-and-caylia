@@ -16,7 +16,7 @@ Player::Player(GameMechs *thisGMRef)
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
  
-    //For debugging purposes and checking various size and snake body 
+    //For debugging purposes and checking various size of snake body 
     //playerPosList->insertHead(tempPos);
     //playerPosList->insertHead(tempPos);
     //playerPosList->insertHead(tempPos);
@@ -25,15 +25,12 @@ Player::Player(GameMechs *thisGMRef)
  
 Player::~Player()
 {
- 
     //Deconstructor
- 
     delete playerPosList;
 }
  
 objPosArrayList* Player::getPlayerPos()
 {
- 
     return playerPosList;
 }
  
@@ -44,9 +41,10 @@ void Player::updatePlayerDir()
     //PPA3 concept used here for WSAD key inputs
     char input = mainGameMechsRef->getInput();
  
- 
+    // Check if there is a valid input
     if (input != 0)
     {
+        // Switch statement to handle player direction based on current direction
         switch (myDir)
         {
         case STOP:
@@ -69,6 +67,7 @@ void Player::updatePlayerDir()
  
         case UP:
         case DOWN:
+            // Change direction when the player is moving vertically (up or down)
             switch (input)
             {
             case 'a':
@@ -82,6 +81,7 @@ void Player::updatePlayerDir()
  
         case LEFT:
         case RIGHT:
+            // Change direction when the player is moving horizontally (left or right)
             switch (input)
             {
             case 'w':
@@ -94,25 +94,26 @@ void Player::updatePlayerDir()
             break;
         }
     }
- 
+    // Clear the input after handling player direction, avoid multiple movements with a single input
     mainGameMechsRef->clearInput();
 }
  
 bool Player::checkFoodConsumption()
 {
-    // checking if the head overlaps with the food
+    // Checking if the head overlaps with the food
     objPos current_head;
     playerPosList->getHeadElement(current_head);
  
-    objPos foodPosition;
-    mainGameMechsRef->getFoodPos(foodPosition);
- 
+    objPos foodPosition; // Getting current position of the snakes head
+    mainGameMechsRef->getFoodPos(foodPosition);// Getting the position of the food
+
+    // Return true if the head's position matches the food's position
     return (current_head.x == foodPosition.x && current_head.y == foodPosition.y);
 }
  
 void Player::increasePlayerLength()
 {
-    // inserting a new position at the tail to increase the player length
+    // Inserting a new position at the tail to increase the player length
     objPos tailPosition;
     playerPosList->getTailElement(tailPosition);
     playerPosList->insertTail(tailPosition);
@@ -122,21 +123,21 @@ bool Player::checkSelfCollision() {
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
 
-    // First, get the current position of the head 
+    // Get the current position of the head 
     int headX = currentHead.x;
     int headY = currentHead.y;
 
-    // Start checking collision from the second segment (index 1)
+    // Start checking collision from the second segment, index 1
     for (int i = 1; i < playerPosList->getSize(); ++i) {
         objPos segment;
         playerPosList->getElement(segment, i);
 
         // Check if the head's position matches any segment's position in the snake's body
         if (headX == segment.x && headY == segment.y) {
-            // Check if the snake's length is greater than 2
+            // Check if the snakes length is greater than 2
             if (playerPosList->getSize() > 2) {
-                mainGameMechsRef->setLoseFlag();
-                mainGameMechsRef->setExitTrue();
+                mainGameMechsRef->setLoseFlag(); // Set lose flag to end the game
+                mainGameMechsRef->setExitTrue(); // Set exit flag to exit the game loop
                 return true; // Collision detected
             } else {
                 // The snake has not moved and collision is due to its length being less than 2 after consuming food
@@ -157,7 +158,7 @@ bool Player::checkSelfCollision() {
 void Player::movePlayer()
 {
  
-    //holding the posintion info of the current head of player
+    // Holding the position information of the current head of player
     objPos current_head;
     playerPosList->getHeadElement(current_head);
  
@@ -167,23 +168,23 @@ void Player::movePlayer()
     switch (myDir)
     {
     case UP:
-        // decrementing/wraparound feature
+        // Decrementing/wraparound feature
         current_head.y = (current_head.y > 1) ? current_head.y - 1 : BOARD_HEIGHT - 2;
         break;
     case DOWN:
-        // incrementing/wraparound feature
+        // Incrementing/wraparound feature
         current_head.y = (current_head.y < BOARD_HEIGHT - 2) ? current_head.y + 1 : 1;
         break;
     case LEFT:
-        // decrementing/wraparound feature
+        // Decrementing/wraparound feature
         current_head.x = (current_head.x > 1) ? current_head.x - 1 : BOARD_WIDTH - 2;
         break;
     case RIGHT:
-        // incrementing/wraparound feature
+        // Incrementing/wraparound feature
         current_head.x = (current_head.x < BOARD_WIDTH - 2) ? current_head.x + 1 : 1;
         break;
     default:
-        // handle an unexpected direction value (e.g., STOP)
+        // Handle an unexpected direction value (e.g. STOP)
         break;
     }
  
@@ -191,17 +192,17 @@ void Player::movePlayer()
         
         if (checkFoodConsumption())
         {
-            mainGameMechsRef->incrementScore(); // food is consumed, increase score
-            increasePlayerLength(); // increase player length
+            mainGameMechsRef->incrementScore(); // Food is consumed, increase score
+            increasePlayerLength(); // Increase player length
             objPos initialPos;
-            mainGameMechsRef->generateFood(*playerPosList, initialPos); // generating new food
+            mainGameMechsRef->generateFood(*playerPosList, initialPos); // Generating new food
         }
         else
         {
-            // the new current head should be inserted to head of the list
+            // The new current head should be inserted to head of the list
             playerPosList->insertHead(current_head);
  
-            // lastly remove the tail of the list
+            // Lastly remove the tail of the list
             playerPosList->removeTail();
         }
     }

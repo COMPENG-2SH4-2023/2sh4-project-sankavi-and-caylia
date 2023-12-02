@@ -2,6 +2,7 @@
 
 objPos::objPos()
 {
+    // Intialization 
     x = 0;
     y = 0;
     symbol = 0; //NULL
@@ -9,6 +10,7 @@ objPos::objPos()
 
 objPos::objPos(objPos &o)
 {
+    // Copy constructor
     x = o.x;
     y = o.y;
     symbol = o.symbol;
@@ -17,6 +19,7 @@ objPos::objPos(objPos &o)
 
 objPos::objPos(int xPos, int yPos, char sym)
 {
+     // Set to x,y,symbol to the provided value/character 
     x = xPos;
     y = yPos;
     symbol = sym;
@@ -31,6 +34,7 @@ void objPos::setObjPos(objPos o)
 
 void objPos::setObjPos(int xPos, int yPos, char sym)
 {
+    // Set to x,y,symbol to the provided value/character 
     x = xPos;
     y = yPos;
     symbol = sym;
@@ -48,15 +52,16 @@ char objPos::getSymbol()
 
 bool objPos::isPosEqual(const objPos* refPos)
 {
-    return (refPos->x == x && refPos->y == y);
+    // Checking if coordinates are equal 
+    return (refPos->x == x && refPos->y == y); 
 }
 
 char objPos::getSymbolIfPosEqual(const objPos* refPos)
 {
     if(isPosEqual(refPos))
-        return getSymbol();
+        return getSymbol(); // Return the sybmol if the coordinates match
     else
-        return 0;
+        return 0; // Return NULL otherwise 
 }
 
 

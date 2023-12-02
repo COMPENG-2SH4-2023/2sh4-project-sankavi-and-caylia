@@ -13,11 +13,11 @@ using namespace std;
  
 
  
-bool exitFlag;
+bool exitFlag; //Flag initialization to control game exit/termination
  
-//Global Pointers
-GameMechs* myGM;
-Player* playerPtr = nullptr;
+//Global Pointers 
+GameMechs* myGM; // Pointer to Gamemechs class object
+Player* playerPtr = nullptr; // Pointer to Player class object
  
  
  
@@ -45,13 +45,9 @@ int main(void)
         LoopDelay();
     }
 
- 
- 
     CleanUp();
  
-   // return 0;
 }
- 
  
  
 void Initialize(void)
@@ -60,13 +56,13 @@ void Initialize(void)
     MacUILib_clearScreen();
  
     
-    exitFlag = false;
-    myGM = new GameMechs(BOARD_WIDTH, BOARD_HEIGHT); //make board size
+    exitFlag = false; // Initialize exit flag to false 
+
+    myGM = new GameMechs(BOARD_WIDTH, BOARD_HEIGHT); // Set the board size 
     playerPtr = new Player(myGM);
  
-    objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@');
- 
-    myGM->generateFood(*playerPtr->getPlayerPos(), initialPos);  // pass initialPos to generateFood
+    objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '*'); // Set the initial position for the food
+    myGM->generateFood(*playerPtr->getPlayerPos(), initialPos); // Generate food with initial position
  
 }
  
@@ -74,10 +70,12 @@ void GetInput(void)
 {
     char input = myGM->getInput(); // Get input from GameMechs class
 
+    // Exiting/Terminating debug key (space bar)
     if (input == ' ') { // Check if the input is the space bar
         exitFlag = true; // Set exit flag to end the game
         return;
     }
+
 
     // Debug-use key to clear old food and generate new one
     if (input == 'n') {
@@ -85,15 +83,6 @@ void GetInput(void)
         objPos initialPos(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, '@'); // Generate a new initial position for the food
         myGM->generateFood(*playerPosList, initialPos); // Generate new food position avoiding player's position
     }
-
- 
-    /*// Debug-use key to clear old food and generate new one
-    if (input == 't') {
-        objPos playerPosList;
-        playerPtr->getPlayerPos(playerPosList); // Get player position
-        myGM->generateFood(playerPosList); // Generate new food position avoiding player's positionwwww
-    }
-    */
    
    
 }
@@ -132,13 +121,13 @@ MacUILib_clearScreen();
         {
             drawn = false;
  
-            // iteratating through the player body
+            // Iteratating through the player body
             for (int k = 0; k < player_body->getSize(); k++)
             {
                 player_body->getElement(temp_body, k);
                 if (temp_body.x == j && temp_body.y == i)
                 {
-                    MacUILib_printf("%c", temp_body.symbol);
+                    MacUILib_printf("%c", temp_body.symbol); // Print the snake's body
                     drawn = true;
                     break;
                 }
@@ -157,7 +146,7 @@ MacUILib_clearScreen();
                 }
             }
  
-            // next iteration if the player body is drawn
+            // Next iteration if the player body is drawn
             if (drawn == true)
                 continue;
  
@@ -174,7 +163,8 @@ MacUILib_clearScreen();
         }
         MacUILib_printf("\n");
     }
- 
+
+
     MacUILib_printf("Current Score: %d\n", myGM->getScore()); // Display the current score
     MacUILib_printf("=====DEBUG MESSAGES=====\n");
  
@@ -190,7 +180,8 @@ MacUILib_clearScreen();
  
 void LoopDelay(void)
 {
-    MacUILib_Delay(DELAY_CONST); // 0.1s delay
+    // Delay constant initialized above and set to 100000
+    MacUILib_Delay(DELAY_CONST); 
 }
  
  
@@ -198,12 +189,12 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();   
 
-    // display the game over message
+    // Display the end game print statment after termination
     MacUILib_printf("Game has ended, your final score is: %d\n", myGM->getScore()); 
   
     MacUILib_uninit();
  
- 
+    // Memory Clean-up
     delete myGM;
     delete playerPtr;
 }

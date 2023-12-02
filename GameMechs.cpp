@@ -8,9 +8,9 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
  
-    score = 0; // initializing score
-    boardSizeX = 30; // default board size
-    boardSizeY = 15;
+    score = 0; // Initializing score
+    boardSizeX = 30; // Default board size Horizontal
+    boardSizeY = 15; // Default board size Vertical
  
     SLOWEST_SPEED = 200000; // Delay in microseconds for speed level 1 (slowest)
     SLOW_SPEED = 150000;
@@ -128,30 +128,30 @@ void GameMechs::incrementScore()
  
 void GameMechs::generateFood(objPosArrayList& playerPosList, const objPos& initialPos) {
  
-    // ensuring that the random seed is initialized once  
+    // Ensuring that the random seed is initialized once  
     static bool seedInitialized = false;
     if (!seedInitialized) {
-        srand(static_cast<unsigned int>(time(nullptr))); // using time as a seed for the random food generator
+        srand(static_cast<unsigned int>(time(nullptr))); // Using time as a seed for the random food generator
         seedInitialized = true;
     }
  
     int xRange = getBoardSizeX(); // Board width
     int yRange = getBoardSizeY(); // Board height
  
-    // generating random character as food
+    // Generating a random character as food
     char randomChar = 'A' + rand() % 26; // from A-Z
  
-    // generating random spots (x and y coordinates) for the food
+    // Generating random spots (x and y coordinates) for the food
     do {
-        // generating coordinates to stay within the border size
+        // Generating coordinates to stay within the border size
         int foodX = rand() % (xRange - 2) + 1;
         int foodY = rand() % (yRange - 2) + 1;
  
-        // checking if the generated coordinates overlap with the snake body or border
+        // Checking if the generated coordinates overlap with the snake body or border
         bool overlap = false;
         for (int i = 0; i < playerPosList.getSize(); i++) {
             objPos snakeSegment;
-            playerPosList.getElement(snakeSegment, i);
+            playerPosList.getElement(snakeSegment, i); // Using getElement to access here 
  
             if (foodX == snakeSegment.x && foodY == snakeSegment.y) {
                 overlap = true;
@@ -159,23 +159,23 @@ void GameMechs::generateFood(objPosArrayList& playerPosList, const objPos& initi
             }
         }
  
-        // checking if initialPos is provided, and avoid it
+        // Checking if initialPos is provided, and avoid it
         if (initialPos.x != -1 && initialPos.y != -1) {
             if (foodX == initialPos.x && foodY == initialPos.y) {
                 overlap = true;
-                continue;  // skip this iteration and generate new coordinates
+                continue;  // Skip this iteration and generate new coordinates
             }
         }
  
  
         if (!overlap && (foodX != 0 && foodY != 0 && foodX != xRange - 1 && foodY != yRange - 1)) {
-            // if no overlap with snake body or border, set the food position and exit the loop
+            // If there is no overlap with snake body or border, set the food position and exit the loop
             foodPos.x = foodX;
             foodPos.y = foodY;
-            foodPos.symbol = randomChar; // represents the randomly generated character
+            foodPos.symbol = randomChar; // Represents the randomly generated character
             break;
         }
-        // if the coordinates overlap, generate new ones
+        // If the coordinates overlap, generate new ones
     } while (true);
  
 }
@@ -183,5 +183,5 @@ void GameMechs::generateFood(objPosArrayList& playerPosList, const objPos& initi
  
 void GameMechs::getFoodPos(objPos& returnPos) {
  
-    returnPos = foodPos; //returns current position of the food
+    returnPos = foodPos; //Returns current position of the food
 }
